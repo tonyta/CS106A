@@ -34,7 +34,8 @@ public class ProgramHierarchy extends GraphicsProgram {
 		add(line(x, y)); //adds a line first
 		add(box(x, y));  //then puts the box on top of it.
 		GLabel msg = new GLabel(s);
-		msg.setFont("Helvetica-20");
+		msg.setFont("Calibri-italic-24");
+		msg.setColor(Color.white);
 		msg.setLocation(x-(msg.getWidth()/2), y+(msg.getAscent()/2));
 		return msg;		 //then finally applies the label to the box.
 	}
@@ -49,7 +50,7 @@ public class ProgramHierarchy extends GraphicsProgram {
 	private GRect box(int x, int y) {
 		GRect box = new GRect(x-(WIDTH/2), y-(HEIGHT/2), WIDTH, HEIGHT);
 		box.setFilled(true);
-		box.setFillColor(Color.white);
+		box.setFillColor(Color.gray);
 		return box;
 	}
 
