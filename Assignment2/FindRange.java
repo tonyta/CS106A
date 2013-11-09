@@ -17,13 +17,17 @@ public class FindRange extends ConsoleProgram {
 	private static final int SENTINEL = 0;
 	
 	public void run() {
-		println("This program finds the largest and smallest numbers.");
+		println("This program finds the largest and smallest integers.");
 		int newNum = readInt("? ");		
 		int largeNum = newNum;
 		int smallNum = newNum;
 		while (newNum != SENTINEL) {
-			if (newNum > largeNum) largeNum = newNum;
-			if (newNum < smallNum) smallNum = newNum;
+			if (newNum > largeNum) {
+				largeNum = newNum;
+			}
+			if (newNum < smallNum) {
+				smallNum = newNum;
+			}
 			newNum = readInt("? ");
 		}
 		if ((largeNum == SENTINEL)&&(smallNum == SENTINEL)) {
