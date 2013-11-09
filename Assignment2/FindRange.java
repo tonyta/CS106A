@@ -10,18 +10,25 @@
 import acm.program.*;
 
 public class FindRange extends ConsoleProgram {
+
+/**
+ * Declares sentinel as a constant.
+ */
+	private static final int SENTINEL = 0;
+	
 	public void run() {
 		println("This program finds the largest and smallest numbers.");
 		int newNum = readInt("? ");		
 		int largeNum = newNum;
 		int smallNum = newNum;
-		while (newNum != 0) {
+		while (newNum != SENTINEL) {
 			if (newNum > largeNum) largeNum = newNum;
 			if (newNum < smallNum) smallNum = newNum;
 			newNum = readInt("? ");
 		}
-		if ((largeNum == 0)&&(smallNum == 0)) println("No valid numbers entered.");
-		else {
+		if ((largeNum == SENTINEL)&&(smallNum == SENTINEL)) {
+			println("No valid numbers entered.");
+		} else {
 			println("smallest: " + smallNum);
 			println("largest: " + largeNum);
 		}
