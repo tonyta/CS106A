@@ -25,7 +25,12 @@ public class Hailstone extends ConsoleProgram {
 			}
 			hailstone = hailstoneResult;
 			processCount++;
+			if (hailstone < 1) break; // needed a break for numbers like '113383'.
 		}
-		println("The process took " + processCount + " steps to reach 1.");
+		if (hailstone == 1) {
+			println("The process took " + processCount + " steps to reach 1.");
+		} else { // message for when the numbers get too big and program fails.
+			println("Whoa. Things got kinda crazy after " + processCount + " steps.");
+		}
 	}
 }
