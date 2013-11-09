@@ -1,17 +1,43 @@
 /*
  * File: CollectNewspaperKarel.java
  * --------------------------------
- * At present, the CollectNewspaperKarel subclass does nothing.
- * Your job in the assignment is to add the necessary code to
- * instruct Karel to walk to the door of its house, pick up the
- * newspaper (represented by a beeper, of course), and then return
- * to its initial position in the upper left corner of the house.
+ * The CollectNewspaperKarel subclass moves Karel to outside
+ * the house, picks up the Newspaper (beeper) and returns him
+ * to the original starting corner and orientation.
  */
 
 import stanford.karel.*;
 
 public class CollectNewspaperKarel extends SuperKarel {
-
-	// You fill in this part
+	public void run () {
+		moveToNewspaper();
+		pickBeeper();
+		returnToOrigin();
+	}
+	
+/**
+ * Moves Karel to Newspaper.
+ */
+	private void moveToNewspaper() {
+		turnRight();
+		move();
+		turnLeft();
+		move();
+		move();
+		move();
+	}
+	
+/**
+ * Moves Karel back to the start.
+ */
+	private void returnToOrigin() {
+		turnAround();
+		move();
+		move();
+		move();
+		turnRight();
+		move();
+		turnRight();
+	}
 
 }
