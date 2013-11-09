@@ -1,16 +1,29 @@
 /*
  * File: FindRange.java
- * Name: 
- * Section Leader: 
+ * Name: Tony Ta
  * --------------------
- * This file is the starter file for the FindRange problem.
+ * The FindRange class collects integers from the user until the
+ * sentinel "0" is entered. Then it outputs the smallest and the
+ * largest integers entered.
  */
 
 import acm.program.*;
 
 public class FindRange extends ConsoleProgram {
 	public void run() {
-		/* You fill this in */
+		println("This program finds the largest and smallest numbers.");
+		int newNum = readInt("? ");		
+		int largeNum = newNum;
+		int smallNum = newNum;
+		while (newNum != 0) {
+			if (newNum > largeNum) largeNum = newNum;
+			if (newNum < smallNum) smallNum = newNum;
+			newNum = readInt("? ");
+		}
+		if ((largeNum == 0)&&(smallNum == 0)) println("No valid numbers entered.");
+		else {
+			println("smallest: " + smallNum);
+			println("largest: " + largeNum);
+		}
 	}
 }
-
