@@ -32,7 +32,7 @@ public class Pyramid extends GraphicsProgram {
 			int bricksLeftInRow = bricksInRow;
 			//lays down each brick and advances to the next
 			while (bricksLeftInRow > 0) { //lays all bricks in current row
-				add(brick(brickXCoordinate, brickYCoordinate));
+				addNewBrick(brickXCoordinate, brickYCoordinate);
 				brickXCoordinate += BRICK_WIDTH; //advances to next brick
 				bricksLeftInRow--; //reduces bricks to build by 1 in this row
 			}
@@ -44,12 +44,12 @@ public class Pyramid extends GraphicsProgram {
 /**
  * Brick factory: This method returns a red brick as an object.
  */
-	private GRect brick(int x, int y) {
+	private void addNewBrick(int x, int y) {
 		GRect brick = new GRect(x, y, BRICK_WIDTH, BRICK_HEIGHT);
 		brick.setFilled(true);
 		brick.setColor(Color.black);
 		brick.setFillColor(Color.red);
-		return brick;
+		add(brick);
 	}
 
 }
