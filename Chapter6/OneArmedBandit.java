@@ -49,7 +49,6 @@ public class OneArmedBandit extends ConsoleProgram {
 	private void playNextRound() {
 		moneyInPlay -= COST_PLAY;
 		simulateSlots();
-		checkWin();
 		moneyInPlay += winnings;
 	}
 	
@@ -58,12 +57,21 @@ public class OneArmedBandit extends ConsoleProgram {
  */
 	private void simulateSlots() {
 		int workingSlotResults = 0;
+		println();
+		println("-------------------------------");
+		print("| ");
 		for (int i = 0; i < NUM_WHEELS; i++) {
+			pause(PAUSE_TIME);
 			workingSlotResults *= 10;
-			workingSlotResults += getWheelResult();
+			int currentWheelResult = getWheelResult();
+			workingSlotResults += currentWheelResult;
+			print(displayWheelResult(currentWheelResult));
+			pause(PAUSE_TIME);
 		}
 		slotResults = workingSlotResults;
-		displaySlotResults();
+		checkWin();
+		println("-------------------------------");
+		println();
 	}
 
 /**
@@ -75,12 +83,18 @@ public class OneArmedBandit extends ConsoleProgram {
 	}	
 	
 /**
- * Displays the results of a round of slots.
- * 
- * Unfinished!
+ * Displays the result of a single wheel.
  */
-	private void displaySlotResults() {
-		print(slotResults);
+	private String displayWheelResult(int n) {
+		switch (n) {
+		case  1: return "CHERRY  | ";
+		case  2: return "LEMON   | ";
+		case  3: return "ORANGE  | ";
+		case  4: return "PLUM    | ";
+		case  5: return "BELL    | ";
+		case  6: return "BAR     | ";
+		default: return "------- | ";
+		}
 	}
 
 /**
@@ -88,13 +102,14 @@ public class OneArmedBandit extends ConsoleProgram {
  */
 	private void checkWin() {
 		if(isWin()) {
-			println(" -- you win $" + winnings);
+			println("-- you win $" + winnings);
 		} else {
-			println(" -- you lose");
+			println("-- you lose");
 		}
 	}
 
 /**
+ * Contains all the win scenarios.
  * Checks if win condition is satisfied and selects the win amount.
  * @return The value TRUE or FALSE depending on whether win or not.
  */
@@ -176,9 +191,6 @@ public class OneArmedBandit extends ConsoleProgram {
 		return answer.equals("yes");
 	}
 
-
-
-	
 	// Amount of money the player starts with.
 	private static final int STARTING_MONEY = 5;
 	
@@ -190,6 +202,9 @@ public class OneArmedBandit extends ConsoleProgram {
 	
 	// Cost per round of play.
 	private static final int COST_PLAY = 1;
+	
+	// Milliseconds each slot spins.
+	private static final int PAUSE_TIME = 500;
 			
 	// Creates an ivar for the random number generator.
 	private RandomGenerator rgen = RandomGenerator.getInstance();
