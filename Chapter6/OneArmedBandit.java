@@ -11,6 +11,9 @@ public class OneArmedBandit extends ConsoleProgram {
 	// Amount of money that the player currently has in play.
 	private int moneyInPlay = STARTING_MONEY;
 	
+	// Current slot results. Each wheel result is stored as a digit.
+	private int slotResults;
+	
 	public void run() {
 		
 		offerInstructions();
@@ -38,11 +41,57 @@ public class OneArmedBandit extends ConsoleProgram {
 	}
 
 /**
- * Plays the next round	
+ * Plays the next round.
  */
 	private void playNextRound() {
-		moneyInPlay--;
+		moneyInPlay -= COST_PLAY;
+		simulateSlots();
+		checkWin();
 	}
+	
+/**
+ * Gets and displays the results to a round of slots.
+ */
+	private void simulateSlots() {
+		int workingSlotResults = 0;
+		for (int i = 0; i < NUM_WHEELS; i++) {
+			workingSlotResults *= 10;
+			workingSlotResults += getWheelResult();
+		}
+		slotResults = workingSlotResults;
+		displaySlotResults();
+	}
+
+/**
+ * Gets a random result for each wheel.
+ * @return The integer representing a symbol on the wheel.
+ */
+	private int getWheelResult() {
+		return rgen.nextInt(1, NUM_SYMBOLS);
+	}	
+	
+/**
+ * Displays the results of a round of slots.
+ * 
+ * Unfinished!
+ */
+	private void displaySlotResults() {
+		print(slotResults);
+	}
+
+/**
+ * Checks to see if current slot results result in a winner or loser.
+ *
+ * Unfinished! Currently set up for testing.
+ */
+	private void checkWin() {
+		if(slotResults > 333) {
+			println(" -- you win!");
+		} else {
+			println(" -- you lose!");
+		}
+	}
+
 	
 /**
  * Checks to see if player wants to play again.
@@ -91,8 +140,17 @@ public class OneArmedBandit extends ConsoleProgram {
 
 
 	
-	// Amount of money the player starts with
+	// Amount of money the player starts with.
 	private static final int STARTING_MONEY = 5;
+	
+	// Number of spinning wheels.
+	private static final int NUM_WHEELS = 3;
+	
+	// Number of symbols per wheel.
+	private static final int NUM_SYMBOLS = 6;
+	
+	// Cost per round of play.
+	private static final int COST_PLAY = 1;
 			
 	// Creates an ivar for the random number generator.
 	private RandomGenerator rgen = RandomGenerator.getInstance();
