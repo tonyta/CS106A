@@ -14,6 +14,9 @@ public class OneArmedBandit extends ConsoleProgram {
 	// Current slot results. Each wheel result is stored as a digit.
 	private int slotResults;
 	
+	// The winnings of a current round of slots.
+	private int winnings = 0;
+	
 	public void run() {
 		
 		offerInstructions();
@@ -47,6 +50,7 @@ public class OneArmedBandit extends ConsoleProgram {
 		moneyInPlay -= COST_PLAY;
 		simulateSlots();
 		checkWin();
+		moneyInPlay += winnings;
 	}
 	
 /**
@@ -81,17 +85,52 @@ public class OneArmedBandit extends ConsoleProgram {
 
 /**
  * Checks to see if current slot results result in a winner or loser.
- *
- * Unfinished! Currently set up for testing.
  */
 	private void checkWin() {
-		if(slotResults > 333) {
-			println(" -- you win!");
+		if(isWin()) {
+			println(" -- you win $" + winnings);
 		} else {
-			println(" -- you lose!");
+			println(" -- you lose");
 		}
 	}
 
+/**
+ * Checks if win condition is satisfied and selects the win amount.
+ * @return The value TRUE or FALSE depending on whether win or not.
+ */
+	private boolean isWin() {
+		
+		// Initializes winnings.
+		winnings = 0;
+		
+		// Set winnings for defined win scenarios.
+		switch (slotResults) {
+			case 666:
+				winnings = 250; break;
+			case 555:
+			case 556:
+				winnings = 20;  break;
+			case 444:
+			case 446:
+				winnings = 14;  break;
+			case 333:
+			case 336:
+				winnings = 10;  break;
+			default:			break;
+		}
+		
+		// Set winnings for wild-card win scenarios.
+		if (slotResults == 111) {
+			winnings = 7;
+		} else if ((slotResults >= 110) && (slotResults < 120)) {
+			winnings = 5;
+		} else if ((slotResults >= 100) && (slotResults < 200)) {
+			winnings = 2;
+		}
+		
+		// Returns whether or not there was a win.
+		return (winnings > 0);
+	}
 	
 /**
  * Checks to see if player wants to play again.
