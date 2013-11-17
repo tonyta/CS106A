@@ -18,34 +18,41 @@ public class OneArmedBandit extends ConsoleProgram {
 		
 		while (true) {
 			
-			// Checks to see if player would like to continue.
-			if (!isPlayingAgain()) {
-				println("You take home $" + moneyInPlay + ".");
-				break;
-			}
-			
-/*			// Checks to see if player still has money in bank.
-			if (isOutOfMoney()) {
+			// Checks to see if player still has money.
+			if (moneyInPlay <= 0) {
 				println("You ran out of money and go home broke.");
 				break;
 			}
 			
+			// Checks to see if player would like to continue.
+			if (!isPlayingAgain()) {
+				println("You take your $" + moneyInPlay + " and go home.");
+				break;
+			}
+			
 			// Plays the next round.
-			nextSlotPlay();
-*/		}
+			playNextRound();
+		}
 		
 		println("Game Over.");
 	}
 
 /**
+ * Plays the next round	
+ */
+	private void playNextRound() {
+		moneyInPlay--;
+	}
+	
+/**
  * Checks to see if player wants to play again.
  */
 	private boolean isPlayingAgain() {
 		String ask = "Would you like to play?";
-		print("You have $" + moneyInPlay + " in play. ");
+		print("You have $" + moneyInPlay + ". ");
 		return askYesNoQuestion(ask);
 	}
-	
+
 /**
  * Offers the player instructions.
  */
@@ -59,6 +66,8 @@ public class OneArmedBandit extends ConsoleProgram {
 
 /**
  * Gives the player instructions.
+ * 
+ * Unfinished!
  */
 	private void giveInstructions() {
 		println("Here are your instructions.");
@@ -83,7 +92,7 @@ public class OneArmedBandit extends ConsoleProgram {
 
 	
 	// Amount of money the player starts with
-	private static final int STARTING_MONEY = 50;
+	private static final int STARTING_MONEY = 5;
 			
 	// Creates an ivar for the random number generator.
 	private RandomGenerator rgen = RandomGenerator.getInstance();
