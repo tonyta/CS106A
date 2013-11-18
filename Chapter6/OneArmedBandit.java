@@ -1,6 +1,11 @@
 /*
  * File: OneArmedBandit.java
  * --------------------
+ * This program simulates a slot machine. The numbers of slots and
+ * symbols are constants and the win conditions are defined in a
+ * private class. The instructions are generated from these same
+ * conditions. The program will keep track of the money in play
+ * including money won and lost. 
  */
 
 import acm.program.*;
@@ -184,8 +189,8 @@ public class OneArmedBandit extends ConsoleProgram {
 
 /**
  * Gives the player instructions.
- * 
- * Unfinished!
+ * Specific combinations are automatically generated.
+ * Wild-card combinations are manually coded.
  */
 	private void giveInstructions() {
 		println();
