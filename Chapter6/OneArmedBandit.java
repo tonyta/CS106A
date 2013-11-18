@@ -32,6 +32,7 @@ public class OneArmedBandit extends ConsoleProgram {
 			
 			// Checks to see if player would like to continue.
 			if (!isPlayingAgain()) {
+				println();
 				println("You take your $" + moneyInPlay + " and go home.");
 				break;
 			}
@@ -56,21 +57,18 @@ public class OneArmedBandit extends ConsoleProgram {
  * Gets and displays the results to a round of slots.
  */
 	private void simulateSlots() {
+		
+		// get new slot result
 		int workingSlotResults = 0;
-		println();
-		println("-------------------------------");
-		print("| ");
 		for (int i = 0; i < NUM_WHEELS; i++) {
-			pause(PAUSE_TIME);
 			workingSlotResults *= 10;
 			int currentWheelResult = getWheelResult();
 			workingSlotResults += currentWheelResult;
-			print(displayWheelResult(currentWheelResult));
-			pause(PAUSE_TIME);
 		}
 		slotResults = workingSlotResults;
+		println();
+		displaySlotResults(slotResults, PAUSE_TIME);
 		checkWin();
-		println("-------------------------------");
 		println();
 	}
 
@@ -82,6 +80,21 @@ public class OneArmedBandit extends ConsoleProgram {
 		return rgen.nextInt(1, NUM_SYMBOLS);
 	}	
 	
+/**
+ * Display result of slots, simulating wheel spinning.
+ * @param result The slot result to display.
+ * @param pause THe amount of pause during the display.
+ */
+	private void displaySlotResults(int result, int pause) {
+		int revResult = reverseDigits(result);
+		print("| ");
+		while(revResult > 0) {
+			pause(pause);
+			print(displayWheelResult(revResult % 10));
+			revResult /= 10;
+			pause(pause);
+		}
+	}
 /**
  * Displays the result of a single wheel.
  */
@@ -101,7 +114,7 @@ public class OneArmedBandit extends ConsoleProgram {
  * Checks to see if current slot results result in a winner or loser.
  */
 	private void checkWin() {
-		if(isWin()) {
+		if(isWin(slotResults)) {
 			println("-- you win $" + winnings);
 		} else {
 			println("-- you lose");
@@ -113,13 +126,13 @@ public class OneArmedBandit extends ConsoleProgram {
  * Checks if win condition is satisfied and selects the win amount.
  * @return The value TRUE or FALSE depending on whether win or not.
  */
-	private boolean isWin() {
+	private boolean isWin(int n) {
 		
 		// Initializes winnings.
 		winnings = 0;
 		
 		// Set winnings for defined win scenarios.
-		switch (slotResults) {
+		switch (n) {
 			case 666:
 				winnings = 250; break;
 			case 555:
@@ -135,11 +148,11 @@ public class OneArmedBandit extends ConsoleProgram {
 		}
 		
 		// Set winnings for wild-card win scenarios.
-		if (slotResults == 111) {
+		if (n == 111) {
 			winnings = 7;
-		} else if ((slotResults >= 110) && (slotResults < 120)) {
+		} else if ((n >= 110) && (n < 120)) {
 			winnings = 5;
-		} else if ((slotResults >= 100) && (slotResults < 200)) {
+		} else if ((n >= 100) && (n < 200)) {
 			winnings = 2;
 		}
 		
@@ -164,6 +177,7 @@ public class OneArmedBandit extends ConsoleProgram {
 		if (isInstruct) {
 			giveInstructions();
 		}
+		println();
 		return;
 	}
 
@@ -173,7 +187,40 @@ public class OneArmedBandit extends ConsoleProgram {
  * Unfinished!
  */
 	private void giveInstructions() {
-		println("Here are your instructions.");
+		int numCombinations = 1;
+		for (int i = 0; i < NUM_WHEELS; i++) {
+			numCombinations *= 10;
+		}
+		println(numCombinations);
+/*
+		for (int j = numCombinations; j > 0; j--) {
+			if (isWin(j)) {
+				int n = reverseDigits(j);
+				while (true) {
+					int k = n % 10;
+					displayWheelResult(k);
+					n /= 10;
+				}
+			}
+		}
+		println();
+*/
+	}
+
+/**
+ * Reverses the digits in a given integer.
+ * @param n The integer to reverse.
+ * @return The integer with its digits reversed.
+ */
+	public int reverseDigits(int n) {
+		int reverse = 0;
+		while (true) {
+			reverse += n % 10;
+			n /= 10;
+			if (n == 0) break;
+			reverse *= 10;
+		}
+		return reverse;
 	}
 		
 /** 
@@ -192,7 +239,7 @@ public class OneArmedBandit extends ConsoleProgram {
 	}
 
 	// Amount of money the player starts with.
-	private static final int STARTING_MONEY = 5;
+	private static final int STARTING_MONEY = 10;
 	
 	// Number of spinning wheels.
 	private static final int NUM_WHEELS = 3;
@@ -204,7 +251,7 @@ public class OneArmedBandit extends ConsoleProgram {
 	private static final int COST_PLAY = 1;
 	
 	// Milliseconds each slot spins.
-	private static final int PAUSE_TIME = 500;
+	private static final int PAUSE_TIME = 200;
 			
 	// Creates an ivar for the random number generator.
 	private RandomGenerator rgen = RandomGenerator.getInstance();
