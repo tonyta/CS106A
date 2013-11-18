@@ -95,6 +95,7 @@ public class OneArmedBandit extends ConsoleProgram {
 			pause(pause);
 		}
 	}
+	
 /**
  * Displays the result of a single wheel.
  */
@@ -115,9 +116,9 @@ public class OneArmedBandit extends ConsoleProgram {
  */
 	private void checkWin() {
 		if(isWin(slotResults)) {
-			println("-- you win $" + winnings);
+			println(" -- you win $" + winnings);
 		} else {
-			println("-- you lose");
+			println(" -- you lose");
 		}
 	}
 
@@ -187,24 +188,38 @@ public class OneArmedBandit extends ConsoleProgram {
  * Unfinished!
  */
 	private void giveInstructions() {
-		int numCombinations = 1;
+		println();
+		println("The following table shows all win scenarios" +
+				" and their associated payoffs:");
+		println();
+		
+		// Finds max results combo.
+		int maxCombo = 0;
 		for (int i = 0; i < NUM_WHEELS; i++) {
-			numCombinations *= 10;
+			maxCombo *= 10;
+			maxCombo += NUM_SYMBOLS;
 		}
-		println(numCombinations);
-/*
-		for (int j = numCombinations; j > 0; j--) {
+		
+		// Finds combos that win except for wild-cards.
+		for (int j = maxCombo; j >=200 ; j--) { // Excludes wild-cards.
 			if (isWin(j)) {
-				int n = reverseDigits(j);
-				while (true) {
-					int k = n % 10;
-					displayWheelResult(k);
-					n /= 10;
-				}
+				displaySlotResults(j, 0);
+				println(" pays $" + winnings);
 			}
 		}
-		println();
-*/
+		
+		// Manually display wild-card combos.
+		isWin(111);
+		displaySlotResults(111, 0);
+		println(" pays $" + winnings);
+		
+		isWin(119);
+		displaySlotResults(119, 0);
+		println(" pays $" + winnings);
+		
+		isWin(199);
+		displaySlotResults(199, 0);
+		println(" pays $" + winnings);	
 	}
 
 /**
