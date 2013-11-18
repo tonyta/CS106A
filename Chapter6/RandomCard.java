@@ -15,8 +15,7 @@ public class RandomCard extends ConsoleProgram {
 		println("Pick a card. Any card. (Press Enter to get random card.)");
 		readLine();
 		while(true) {
-			readLine(getCard() + " of " + getSuit() +
-					" (Press Enter for another card.)");
+			readLine(getCard() + " of " + getSuit());
 		}
 	}
 	
